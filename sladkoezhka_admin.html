@@ -1,0 +1,539 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Сладкоежка — Онлайн заказы</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #fff8f0;
+            margin: 0;
+            padding: 0;
+        }
+        .tabs {
+            display: flex;
+            background: #e88e8e;
+        }
+        .tab-button {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            color: white;
+            cursor: pointer;
+            background: #e88e8e;
+            border: none;
+            font-size: 16px;
+        }
+        .tab-button.active,
+        .tab-button:hover {
+            background: #c96e6e;
+        }
+        .tab-content {
+            display: none;
+            padding: 30px;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .menu-panel {
+            width: 120px;
+            background: #f3c5c5;
+            display: flex;
+            flex-direction: column;
+        }
+        .menu-button {
+            padding: 15px 0;
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: #5c1f1f;
+        }
+        .menu-button.active,
+        .menu-button:hover {
+            background: #f0b1b1;
+            font-weight: bold;
+        }
+        .dessert-container {
+            display: flex;
+            max-width: 960px;
+            margin: auto;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .main-content {
+            flex: 1;
+            padding: 20px;
+        }
+        .dessert-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .dessert-table th, .dessert-table td {
+            border: 1px solid #eee;
+            padding: 8px;
+        }
+        .dessert-table th {
+            background: #f3c5c5;
+            color: #5c1f1f;
+        }
+        .order-container, .orders-container {
+            max-width: 600px;
+            margin: 30px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .order-container h2, .orders-container h2 {
+            text-align: center;
+            color: #d45a5a;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            width: 100%;
+            background: #e88e8e;
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:disabled {
+            background: #ccc;
+        }
+        .success-message {
+            display: none;
+            background: #d4edda;
+            color: #155724;
+            padding: 10px;
+            margin-top: 15px;
+            text-align: center;
+            border-radius: 5px;
+        }
+        .total {
+            font-weight: bold;
+            margin-top: 20px;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <div class="tabs">
+        <button class="tab-button active" data-tab="tab1">Десерты</button>
+        <button class="tab-button" data-tab="tab2">Оформить заказ</button>
+        <button class="tab-button" data-tab="tab3">История заказов</button>
+    </div>
+
+    <div class="tab-content active" id="tab1">
+        <div class="dessert-container">
+            <div class="menu-panel">
+                <button class="menu-button active" data-category="all">Все</button>
+                <button class="menu-button" data-category="Торты">Торты</button>
+                <button class="menu-button" data-category="Пирожные">Пирожные</button>
+                <button class="menu-button" data-category="Напитки">Напитки</button>
+            </div>
+            <div class="main-content">
+                <table class="dessert-table">
+                    <thead>
+                        <tr><th>Название</th><th>Категория</th><th>Цена</th></tr>
+                    </thead>
+                    <tbody id="dessert-data"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-content" id="tab2">
+        <div class="order-container">
+            <h2>Оформление заказа</h2>
+
+<div class="form-group">
+    <label for="dessert">Десерт:</label>
+    <select id="dessert"></select>
+</div>
+
+<div class="form-group">
+    <label for="quantity">Количество:</label>
+    <input type="number" id="quantity" min="1" value="1">
+</div>
+
+<div class="form-group">
+    <label for="name">Имя:</label>
+    <input type="text" id="name">
+</div>
+
+<div class="form-group">
+    <label for="phone">Телефон:</label>
+    <input type="tel" id="phone">
+</div>
+
+<button id="submitOrder" disabled>Оформить</button>
+
+<div style="text-align:center; margin-top: 20px;">
+    <a href="index.html" 
+       style="display: inline-block; background: #ccc; color: #333; padding: 10px 20px; text-decoration: none; border-radius: 6px;">
+        Вернуться в главное меню
+    </a>
+</div>
+
+<div class="success-message" id="successMessage">Заказ оформлен! № <span id="orderNumber"></span></div>
+        </div>
+    </div>
+
+    <div class="tab-content" id="tab3" style="display:none;">
+        <div class="orders-container">
+            <h2>История заказов</h2>
+<button onclick="clearAllOrders()" style="margin-bottom: 15px; background: #888; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer;">Очистить всё</button>
+            <button id="exportBtn" style="margin-bottom: 15px; background: #e88e8e; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; margin-left: 10px;">Скачать заказы</button>
+
+            <table id="ordersTable">
+                <thead>
+                    <tr><th>№</th><th>Десерт</th><th>Имя</th><th>Телефон</th><th>Кол-во</th><th>Сумма</th><th>Действие</th></tr>
+                </thead>
+                <tbody id="ordersBody"></tbody>
+            </table>
+            <div class="total" id="totalAmount">Общая сумма: 0 руб.</div>
+<div style="text-align:center; margin-top: 20px;">
+    <a href="index.html" style="display: inline-block; background: #ccc; color: #333; padding: 10px 20px; text-decoration: none; border-radius: 6px;">
+        Вернуться в главное меню
+    </a>
+</div>
+
+        </div>
+    </div>
+
+    <script>
+        const tabs = document.querySelectorAll(".tab-button");
+        const contents = document.querySelectorAll(".tab-content");
+        tabs.forEach(btn => {
+            btn.addEventListener("click", () => {
+                tabs.forEach(b => b.classList.remove("active"));
+                contents.forEach(c => c.classList.remove("active"));
+                btn.classList.add("active");
+                document.getElementById(btn.dataset.tab).classList.add("active");
+            });
+        });
+
+        const desserts = [
+{ name: "Торт 'Карамельное наслаждение'", category: "Торты", price: 1200, stock: 30 },
+{ name: "Торт 'Ягодный микс'", category: "Торты", price: 1100, stock: 30 },
+{ name: "Торт 'Клубничный взрыв'", category: "Торты", price: 1300, stock: 30 },
+{ name: "Торт 'Фисташковая нежность'", category: "Торты", price: 1400, stock: 30 },
+{ name: "Торт 'Медовый рай'", category: "Торты", price: 900, stock: 30 },
+{ name: "Торт 'Маракуйя и манго'", category: "Торты", price: 1500, stock: 30 },
+{ name: "Торт 'Кофейный дуэт'", category: "Торты", price: 1250, stock: 30 },
+{ name: "Торт 'Шоколадный эклер'", category: "Торты", price: 1350, stock: 30 },
+{ name: "Торт 'Черничный лес'", category: "Торты", price: 1450, stock: 30 },
+{ name: "Торт 'Розовый крем'", category: "Торты", price: 1100, stock: 30 },
+{ name: "Макарун 'Малина и роза'", category: "Пирожные", price: 200, stock: 30 },
+{ name: "Эклер 'Шоколадная карамель'", category: "Пирожные", price: 180, stock: 30 },
+{ name: "Пирожное 'Кокосовое облако'", category: "Пирожные", price: 220, stock: 30 },
+{ name: "Пирожное 'Манговое солнце'", category: "Пирожные", price: 230, stock: 30 },
+{ name: "Эклер 'Фисташковый крем'", category: "Пирожные", price: 210, stock: 30 },
+{ name: "Тарталетка 'Лимонное наслаждение'", category: "Пирожные", price: 170, stock: 30 },
+{ name: "Капкейк 'Ягодный фреш'", category: "Пирожные", price: 160, stock: 30 },
+{ name: "Капкейк 'Ванильный рай'", category: "Пирожные", price: 150, stock: 30 },
+{ name: "Пирожное 'Фисташка и шоколад'", category: "Пирожные", price: 250, stock: 30 },
+{ name: "Тарталетка 'Тропический микс'", category: "Пирожные", price: 200, stock: 30 },
+{ name: "Латте", category: "Напитки", price: 170, stock: 30 },
+{ name: "Матча латте", category: "Напитки", price: 200, stock: 30 },
+{ name: "Молочный коктейль 'Клубника'", category: "Напитки", price: 120, stock: 30 },
+{ name: "Молочный коктейль 'Банан'", category: "Напитки", price: 120, stock: 30 }
+];
+        let ordersText = "";
+
+
+        const dessertDataEl = document.getElementById("dessert-data");
+        const menuButtons = document.querySelectorAll(".menu-button");
+        function renderTable(category = "all") {
+            dessertDataEl.innerHTML = "";
+            const filtered = category === "all" ? desserts : desserts.filter(d => d.category === category);
+            filtered.forEach(d => {
+                dessertDataEl.innerHTML += `
+                    <tr><td>${d.name}</td><td>${d.category}</td><td>${d.price} руб.</td></tr>`;
+            });
+        }
+        menuButtons.forEach(btn => {
+            btn.addEventListener("click", () => {
+                menuButtons.forEach(b => b.classList.remove("active"));
+                btn.classList.add("active");
+                renderTable(btn.dataset.category);
+            });
+        });
+        renderTable();
+
+        const dessertSelect = document.getElementById("dessert");
+        desserts.forEach(d => {
+            const opt = document.createElement("option");
+            opt.value = d.name;
+            opt.textContent = d.name;
+            dessertSelect.appendChild(opt);
+        });
+
+        const quantityInput = document.getElementById("quantity");
+        const nameInput = document.getElementById("name");
+        const phoneInput = document.getElementById("phone");
+        const submitBtn = document.getElementById("submitOrder");
+        const orderNumberSpan = document.getElementById("orderNumber");
+        const successMsg = document.getElementById("successMessage");
+
+        function checkForm() {
+    const nameValid = /^[А-Яа-яЁёA-Za-z\s'-]{2,}$/.test(nameInput.value.trim());
+
+    // Удаляем все, кроме цифр
+    const digits = phoneInput.value.replace(/\D/g, '');
+    const phoneValid = digits.length === 11;
+
+    nameInput.style.borderColor = nameValid ? "#ccc" : "red";
+    phoneInput.style.borderColor = phoneValid ? "#ccc" : "red";
+
+    submitBtn.disabled = !(dessertSelect.value && nameValid && phoneValid);
+}
+        nameInput.addEventListener("input", checkForm);
+        phoneInput.addEventListener("input", checkForm);
+        dessertSelect.addEventListener("change", checkForm);
+
+        submitBtn.addEventListener("click", () => {
+            const dessert = desserts.find(d => d.name === dessertSelect.value);
+            const qty = parseInt(quantityInput.value);
+            const total = qty * dessert.price;
+            const order = {
+                id: Date.now(),
+                name: nameInput.value,
+                phone: phoneInput.value,
+                dessert: dessert.name,
+                quantity: qty,
+                total: total
+            };
+            let orders = JSON.parse(localStorage.getItem("sweetOrders") || "[]");
+            orders.push(order);
+            localStorage.setItem("sweetOrders", JSON.stringify(orders));
+            // Добавляем заказ в текстовую переменную
+            ordersText += `${order.id},${order.dessert},${order.name},${order.phone},${order.quantity},${order.total}\n`;
+
+            orderNumberSpan.textContent = order.id;
+            successMsg.style.display = "block";
+            dessertSelect.value = "";
+            nameInput.value = "";
+            phoneInput.value = "";
+            quantityInput.value = 1;
+            checkForm();
+            loadOrders();
+        });
+
+        function loadOrders() {
+            const orders = JSON.parse(localStorage.getItem("sweetOrders") || "[]");
+            const body = document.getElementById("ordersBody");
+            const totalEl = document.getElementById("totalAmount");
+            body.innerHTML = "";
+            let sum = 0;
+            orders.forEach(o => {
+                body.innerHTML += `<tr>
+                    <td>${o.id}</td><td>${o.dessert}</td><td>${o.name}</td>
+                    <td>${o.phone}</td><td>${o.quantity}</td><td>${o.total} руб.</td>
+                    <td><button onclick="deleteOrder(${o.id})" style="background:#dc3545;color:white;padding:5px 10px;border:none;border-radius:4px;cursor:pointer;">Удалить</button></td>
+                </tr>`;
+                sum += o.total;
+            });
+            totalEl.textContent = "Общая сумма: " + sum + " руб.";
+        }
+        loadOrders();
+        // Экспорт заказов в текстовый файл
+        document.getElementById("exportBtn").addEventListener("click", () => {
+            const blob = new Blob([ordersText], { type: "text/plain;charset=utf-8" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "orders.txt";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        });
+
+    
+function hideLoginModal() {
+    document.getElementById("loginModal").style.display = "none";
+    // Вернём пользователя на вкладку "Десерты"
+    document.querySelectorAll(".tab-button").forEach(b => b.classList.remove("active"));
+    document.querySelectorAll(".tab-content").forEach(t => t.classList.remove("active"));
+    document.querySelector('[data-tab="tab1"]').classList.add("active");
+    document.getElementById("tab1").classList.add("active");
+}
+
+function deleteOrder(orderId) {
+    let orders = JSON.parse(localStorage.getItem("sweetOrders") || "[]");
+    orders = orders.filter(o => o.id !== orderId);
+    localStorage.setItem("sweetOrders", JSON.stringify(orders));
+    loadOrders();
+}
+
+
+function clearAllOrders() {
+    if (confirm("Вы уверены, что хотите удалить все заказы?")) {
+        localStorage.removeItem("sweetOrders");
+        loadOrders();
+    }
+}
+
+</script>
+
+
+
+<div id="loginModal" style="
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+">
+  <div style="
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 340px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.25);
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+  ">
+    <h3 style="margin-bottom: 15px; color: #d45a5a; text-align:center;">Вход администратора</h3>
+    <div style="margin-bottom: 10px;">
+        <label style="display:block; margin-bottom:4px;">Логин:</label>
+        <input type="text" id="adminLogin" style="
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        " />
+    </div>
+    <div style="margin-bottom: 15px;">
+        <label style="display:block; margin-bottom:4px;">Пароль:</label>
+        <input type="password" id="adminPassword" style="
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        " />
+    </div>
+    
+<button onclick="checkAdmin()" style="
+        width: 100%;
+        background: #e88e8e;
+        color: white;
+        border: none;
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 6px;
+        cursor: pointer;
+    ">Войти</button>
+    <button onclick="hideLoginModal()" style="
+        width: 100%;
+        margin-top: 10px;
+        background: #ccc;
+        color: #333;
+        border: none;
+        padding: 10px;
+        font-size: 14px;
+        border-radius: 6px;
+        cursor: pointer;
+    ">Назад</button>
+
+  </div>
+</div>
+
+</div>
+
+</body>
+
+<script>
+document.querySelectorAll('.tab-button').forEach(btn => {
+    if (btn.dataset.tab === 'tab3') {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('loginModal').style.display = 'flex';
+        });
+    }
+});
+
+function checkAdmin() {
+    const login = document.getElementById("adminLogin").value;
+    const pass = document.getElementById("adminPassword").value;
+    if (login === "admin" && pass === "sweet123") {
+        document.getElementById("loginModal").style.display = "none";
+        document.querySelectorAll(".tab-button").forEach(b => b.classList.remove("active"));
+        document.querySelectorAll(".tab-content").forEach(t => t.classList.remove("active"));
+        document.querySelector('[data-tab="tab3"]').classList.add("active");
+        document.getElementById("tab3").style.display = "block";
+        document.getElementById("tab3").classList.add("active");
+        loadOrders();
+    } else {
+        alert("Неверный логин или пароль");
+    }
+}
+
+function hideLoginModal() {
+    document.getElementById("loginModal").style.display = "none";
+    // Вернём пользователя на вкладку "Десерты"
+    document.querySelectorAll(".tab-button").forEach(b => b.classList.remove("active"));
+    document.querySelectorAll(".tab-content").forEach(t => t.classList.remove("active"));
+    document.querySelector('[data-tab="tab1"]').classList.add("active");
+    document.getElementById("tab1").classList.add("active");
+}
+
+function deleteOrder(orderId) {
+    let orders = JSON.parse(localStorage.getItem("sweetOrders") || "[]");
+    orders = orders.filter(o => o.id !== orderId);
+    localStorage.setItem("sweetOrders", JSON.stringify(orders));
+    loadOrders();
+}
+
+
+function clearAllOrders() {
+    if (confirm("Вы уверены, что хотите удалить все заказы?")) {
+        localStorage.removeItem("sweetOrders");
+        loadOrders();
+    }
+}
+
+</script>
+
+
+</html>
+
+<style>
+#ordersTable th, #ordersTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+#ordersTable th {
+    background-color: #f8d7da;
+    color: #721c24;
+    text-align: left;
+}
+#ordersTable tr:nth-child(even) {
+    background-color: #fdf1f2;
+}
+</style>

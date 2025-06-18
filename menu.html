@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="ie=edge" http-equiv="X-UA-Compatible"/>
+<title>Меню - Сладкоежка</title>
+<link href="styles.css" rel="stylesheet"/>
+</head>
+<body>
+<header>
+<img src="images/logo.png" alt="Логотип Кондитерской 'Сладкоежка'" class="logo">
+<img src="images/cream.png" alt="Стекающий крем" class="cream-image">
+<h1>Кондитерская "Сладкоежка"</h1>
+<nav>
+<ul>
+<li><a href="index.html">Главная</a></li>
+<li><a href="about.html">О нас</a></li>
+<li><a href="contacts.html">Контакты</a></li>
+<li><a href="order.html">Оставить заявку</a></li>
+<li><a href="gallery.html">Галерея</a></li>
+<li><a href="testimonials.html">Отзывы</a></li>
+</ul>
+</nav>
+</header>
+<section class="menu-container">
+<h2>Меню</h2>
+<div class="categories">
+<button onclick="showCategory('cakes')">Торты</button>
+<button onclick="showCategory('pastries')">Пирожные</button>
+<button onclick="showCategory('drinks')">Напитки</button>
+</div>
+<!-- Категория: Торты -->
+<div class="menu-items" id="cakes">
+<div class="menu-item">
+<img alt="Торт Карамельное наслаждение" src="images/cake4.jpg"/>
+<h3>Торт "Карамельное наслаждение"</h3>
+<p>Торт с карамельной начинкой и шоколадной глазурью. 1200 руб.</p>
+</div>
+<div class="menu-item">
+<img alt="Торт Ягодный микс" src="images/cake5.jpg"/>
+<h3>Торт "Ягодный микс"</h3>
+<p>Легкий бисквит с ягодами и ванильным кремом. 1100 руб.</p>
+</div>
+<div class="menu-item">
+<img alt="Торт Клубничный взрыв" src="images/cake6.jpg"/>
+<h3>Торт "Клубничный взрыв"</h3>
+<p>Клубничный торт с насыщенным кремом. 1300 руб.</p>
+</div>
+<div class="menu-item">
+<img alt="Торт Фисташковая нежность" src="images/cake7.jpg"/>
+<h3>Торт "Фисташковая нежность"</h3>
+<p>Фисташковый бисквит с легким сливочным кремом. 1400 руб.</p>
+</div>
+<div class="menu-item">
+<img alt="Торт Медовый рай" src="images/cake8.jpg"/>
+<h3>Торт "Медовый рай"</h3>
+<p>Нежный медовый торт с орехами и сметанным кремом. 900 руб.</p>
+</div>
+<div class="menu-item">
+<img alt="Торт Маракуйя и манго" src="images/cake9.jpg"/>
+<h3>Торт "Маракуйя и манго"</h3>
+<p>Тропический вкус с освежающим фруктовым кремом. 1500 руб.</p>
+</div>
+<div class="menu-item">
+<img alt="Торт Кофейный дуэт" src="images/cake10.jpg"/>
+<h3>Торт "Кофейный дуэт"</h3>
+<p>Кофейный бисквит и крем на основе сливок. 1250 руб.</p>
+</div>
+<div class="menu-item">
+<img alt="Торт Шоколадный эклер" src="images/cake11.jpg"/>
+<h3>Торт "Шоколадный эклер"</h3>
+<p>Торт с шоколадной начинкой и нежной глазурью. 1350 руб.</p>
+</div>
+<div class="menu-item">
+<img alt="Торт Черничный лес" src="images/cake12.jpg"/>
+<h3>Торт "Черничный лес"</h3>
+<p>Сливочный крем и черника на ванильном бисквите. 1450 руб.</p>
+</div>
+<div class="menu-item">
+<img alt="Торт Розовый крем" src="images/cake13.jpg"/>
+<h3>Торт "Розовый крем"</h3>
+<p>Нежный розовый крем и воздушный бисквит. 1100 руб.</p>
+</div>
+</div>
+<!-- Категория: Пирожные -->
+<div class="menu-items" id="pastries" style="display:none;">
+<div class="menu-item">
+<img alt="Макарун Малина и роза" src="images/CupCake1.jpg"/>
+<h3>Макарун "Малина и роза"</h3>
+<p>Макаруны с малиновым и розовым кремом. 200 руб.</p>
+</div>
+<div class="menu-item">
+<img alt="Эклер Шоколадная карамель" src="images/CupCake2.jpg"/>
+<h3>Эклер "Шоколадная карамель"</h3>
+<p>Эклер с шоколадным кремом и карамельной глазурью. 180 руб.</p>
+</div>
+<div class="menu-item">
+<img alt="Пирожное Кокосовое облако" src="images/CupCake3.jpg"/>
+<h3>Пирожное "Кокосовое облако"</h3>
+<p>Кокосовый крем с нежной прослойкой. 220 руб.</p>
+</div>
+<div class="menu-item">
+<img alt="Пирожное Манговое солнце" src="images/CupCake4.jpg"/>
+<h3>Пирожное "Манговое солнце"</h3>
+<p>Пирожное с манговым муссом и фруктами. 230 руб.</p>
+</div>
+<div class="menu-item">
+<img alt="Эклер Фисташковый крем" src="images/CupCake5.jpg"/>
+<h3>Эклер "Фисташковый крем"</h3>
+<p>Эклер с фисташковым кремом и ореховой крошкой. 210 руб.</p>
+</div>
+<div class="menu-item">
+<img alt="Тарталетка Лимонное наслаждение" src="images/CupCake6.jpg"/>
+<h3>Тарталетка "Лимонное наслаждение"</h3>
+<p>Лимонный крем и ванильное тесто. 170 руб.</p>
+</div>
+<div class="menu-item">
+<img alt="Капкейк Ягодный фреш" src="images/CupCake7.jpg"/>
+<h3>Капкейк "Ягодный фреш"</h3>
+<p>Сливочный крем с ягодной начинкой. 160 руб.</p>
+</div>
+<div class="menu-item">
+<img alt="Капкейк Ванильный рай" src="images/CupCake8.jpg"/>
+<h3>Капкейк "Ванильный рай"</h3>
+<p>Воздушный ванильный крем. 150 руб.</p>
+</div>
+<div class="menu-item">
+<img alt="Пирожное Фисташка и шоколад" src="images/CupCake9.jpg"/>
+<h3>Пирожное "Фисташка и шоколад"</h3>
+<p>Сочетание фисташкового и шоколадного крема. 250 руб.</p>
+</div>
+<div class="menu-item">
+<img alt="Тарталетка Тропический микс" src="images/CupCake10.jpg"/>
+<h3>Тарталетка "Тропический микс"</h3>
+<p>Манговый и маракуевый крем. 200 руб.</p>
+</div>
+</div>
+<!-- Категория: Напитки -->
+<div class="menu-items" id="drinks" style="display:none;">
+<div class="menu-item">
+<img alt="Кофе Американо" src="images/Drink1.jpg"/>
+<h3>Кофе "Американо"</h3>
+<p>Классический черный кофе. 100 руб.</p>
+</div>
+<div class="menu-item">
+<img alt="Капучино" src="images/Drink2.jpg"/>
+<h3>Капучино</h3>
+<p>Эспрессо с молочной пенкой. 150 руб.</p>
+</div>
+<div class="menu-item">
+<img alt="Кофе Латте" src="images/Drink3.jpg"/>
+<h3>Латте</h3>
+<p>Молочный кофе с карамелью или шоколадом. 170 руб.</p>
+</div>
+<div class="menu-item">
+<img alt="Кофе Матча латте" src="images/Drink4.jpg"/>
+<h3>Матча латте</h3>
+<p>Освежающий напиток на основе матча. 200 руб.</p>
+</div>
+<div class="menu-item">
+<img alt="Горячий шоколад" src="images/Drink5.jpg"/>
+<h3>Горячий шоколад</h3>
+<p>Насыщенный горячий шоколад. 180 руб.</p>
+</div>
+<div class="menu-item">
+<img alt="Молочный коктель Клубника" src="images/Drink6.jpg"/>
+<h3>Молочный коктейль "Клубника"</h3>
+<p>Коктейль с клубничным вкусом. 120 руб.</p>
+</div>
+<div class="menu-item">
+<img alt="Молочный коктель Банан" src="images/Drink7.jpg"/>
+<h3>Молочный коктейль "Банан"</h3>
+<p>Коктейль с банановым вкусом. 120 руб.</p>
+</div>
+<div class="menu-item">
+<img alt="Чай Чёрный" src="images/Drink8.jpg"/>
+<h3>Чай "Черный"</h3>
+<p>Классический черный чай. 80 руб.</p>
+</div>
+<div class="menu-item">
+<img alt="Чай Зелёный" src="images/Drink9.jpg"/>
+<h3>Чай "Зеленый"</h3>
+<p>Зеленый чай с легкой горчинкой. 80 руб.</p>
+</div>
+<div class="menu-item">
+<img alt="Молочный коктель Шоколал" src="images/Drink10.jpg"/>
+<h3>Молочный коктейль "Шоколад"</h3>
+<p>Шоколадный молочный коктейль. 130 руб.</p>
+</div>
+</div>
+</section>
+<footer>
+<p>© 2024 Кондитерская "Сладкоежка". Все права защищены.</p>
+</footer>
+<script src="scripts.js"></script>
+<!-- Модальное окно для описания -->
+<div class="modal" id="productModal">
+<div class="modal-content">
+<span class="close-btn" onclick="closeProductModal()">×</span>
+<img alt="" id="modalImage" src=""/>
+<h3 id="modalTitle"></h3>
+<p id="modalText"></p>
+</div>
+</div>
+</body>
+<script>
+document.querySelectorAll('.menu-item').forEach(item => {
+  item.addEventListener('click', () => {
+    const img = item.querySelector('img');
+    const title = item.querySelector('h3').textContent;
+    const text = item.querySelector('p').textContent;
+
+    document.getElementById('modalImage').src = img.src;
+    document.getElementById('modalImage').alt = img.alt;
+    document.getElementById('modalTitle').textContent = title;
+    document.getElementById('modalText').textContent = text;
+
+    document.getElementById('productModal').style.display = 'flex';
+  });
+});
+
+function closeProductModal() {
+  document.getElementById('productModal').style.display = 'none';
+}
+</script>
+</html>

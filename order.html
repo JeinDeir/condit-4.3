@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Оставить заявку - Сладкоежка</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <img src="images/logo.png" alt="Логотип Кондитерской 'Сладкоежка'" class="logo">
+        <img src="images/cream.png" alt="Стекающий крем" class="cream-image">
+        <h1>Кондитерская "Сладкоежка"</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="about.html">О нас</a></li>
+                <li><a href="menu.html">Меню</a></li>
+                <li><a href="contacts.html">Контакты</a></li>
+                <li><a href="gallery.html">Галерея</a></li>
+                <li><a href="testimonials.html">Отзывы</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section>
+        <h2>Оставить заявку</h2>
+        
+<div style="text-align:center; margin-top: 50px;">
+  <h2 style="margin-bottom: 30px;">Хочу сделать заказ</h2>
+  <img src="images/candy-pack.png" alt="Иконка кекса" class="cake-ikon2">
+  <a href="sladkoezhka_admin.html" style="
+      background: #d45a5a;
+      color: white;
+      padding: 15px 30px;
+      text-decoration: none;
+      font-size: 18px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      transition: transform 0.2s;
+  " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+    Перейти к оформлению заказа
+  </a>
+</div>
+
+    </section>
+
+    <!-- Модальное окно -->
+    <div id="confirmationModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <p>Ваша заявка на рассмотрении, с вами свяжется оператор.</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Кондитерская "Сладкоежка". Все права защищены.</p>
+    </footer>
+
+    <script>
+        const modal = document.getElementById("confirmationModal");
+        const closeBtn = document.querySelector(".close-btn");
+
+        document.getElementById("orderForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Предотвращаем отправку формы на сервер
+
+            let name = document.getElementById("name").value;
+            let phone = document.getElementById("phone").value;
+            let email = document.getElementById("email").value;
+            let order = document.getElementById("order").value;
+
+            if (name && phone && email && order) {
+                modal.style.display = "block"; // Показываем модальное окно
+            }
+        });
+
+        closeBtn.onclick = function() {
+            modal.style.display = "none"; // Закрываем модальное окно
+        };
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none"; // Закрываем окно при клике вне его области
+            }
+        };
+    </script>
+</body>
+</html>
